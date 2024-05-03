@@ -11,6 +11,9 @@ RUN apt upgrade -y
 # install ping for debugging network
 RUN apt install inetutils-ping -y
 
+# install htop
+RUN apt install htop -y
+
 # install dnsutils to know the ip of other containers
 RUN yes "1" | apt install dnsutils -y
 
@@ -23,11 +26,11 @@ RUN apt install python3 -y
 # install pip
 RUN apt install python3-pip -y
 
+# return shell to non-interactive mode to stop docker's yelling
+SHELL ["/bin/bash", "--login", "-c"]
+
 # change current working directory to /
 WORKDIR /
 
 # copy tcp && udp server python scripts
 COPY . .
-
-# prevent container from exiting by keeping it running in the background
-CMD exec "$@"
